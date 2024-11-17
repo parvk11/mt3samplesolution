@@ -3,16 +3,26 @@ import music_transcription_with_transformers
 SAMPLE_RATE = 16000
 SF2_PATH = music_transcription_with_transformers.SF2_PATH
 import note_seq
+import subprocess
 
 
 def main():
     parser = argparse.ArgumentParser(description="MT3 Music Transcription Tool")
-    parser.add_argument('--input', type=str, required=True, help="Path to the input audio file (e.g., .wav)")
-    parser.add_argument('--output', type=str, default="output.mid", help="Path to save the transcribed MIDI file")
+    parser.add_argument('--i', type=str, required=True, help="Path to the input audio file (e.g., .wav)")
+    parser.add_argument('--o', type=str, default="output.mid", help="Path to save the transcribed MIDI file")
     
     args = parser.parse_args()
 
     # Run transcription
+
+    command = ['gsutil', '-q', '-m', 'cp', 'gs://magentadata/soundfonts/SGM-v2.01-Sal-Guit-Bass-V1.3.sf2', '.']
+
+    #Run the command
+    try:
+        subprocess.run(command, check=True)
+        print("File copied successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Error occurred: {e}")
 
     MODEL = "mt3" #@param["ismir2021", "mt3"]
 

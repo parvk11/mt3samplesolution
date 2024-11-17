@@ -20,6 +20,7 @@ dependencies:
   - numpy
   - ipython
   - google-api-python-client  # For Google Cloud Storage utilities like gsutil
+  - google-cloud-sdk  # This includes gsutil
   - pip:
     - google-auth
     - google-cloud-storage
