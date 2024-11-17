@@ -1,0 +1,33 @@
+name: music_transcription_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - jax
+  - jaxlib=0.4.11  # Specify the version compatible with CUDA 12 (if applicable)
+  - nest-asyncio
+  - pyfluidsynth==1.3.0
+  - tensorflow=2.12  # You may need to adjust this version based on your environment's compatibility
+  - librosa
+  - note-seq
+  - seqio
+  - t5
+  - t5x
+  - gin-config
+  - google-colab
+  - numpy
+  - ipython
+  - google-api-python-client  # For Google Cloud Storage utilities like gsutil
+  - pip:
+    - google-auth
+    - google-cloud-storage
+    - tfds-nightly
+    - absl-py
+    - matplotlib  # For visualization (optional)
+  - system:
+    - libfluidsynth3
+    - build-essential
+    - libasound2-dev
+    - libjack-dev
