@@ -349,63 +349,63 @@ class InferenceModel(object):
 #@markdown The `mt3` model transcribes multiple simultaneous instruments,
 #@markdown but without velocities.
 
-MODEL = "mt3" #@param["ismir2021", "mt3"]
+# MODEL = "mt3" #@param["ismir2021", "mt3"]
 
-checkpoint_path = f'/checkpoints/{MODEL}/'
+# checkpoint_path = f'/checkpoints/{MODEL}/'
 
-load_gtag()
+# load_gtag()
 
-log_event('loadModelStart', {'event_category': MODEL})
-inference_model = InferenceModel(checkpoint_path, MODEL)
-log_event('loadModelComplete', {'event_category': MODEL})
+# log_event('loadModelStart', {'event_category': MODEL})
+# inference_model = InferenceModel(checkpoint_path, MODEL)
+# log_event('loadModelComplete', {'event_category': MODEL})
 
-#@title Upload Audio
+# #@title Upload Audio
 
-load_gtag()
+# load_gtag()
 
-log_event('uploadAudioStart', {})
-audio = upload_audio(sample_rate=SAMPLE_RATE)
-log_event('uploadAudioComplete', {'value': round(len(audio) / SAMPLE_RATE)})
+# log_event('uploadAudioStart', {})
+# audio = upload_audio(sample_rate=SAMPLE_RATE)
+# log_event('uploadAudioComplete', {'value': round(len(audio) / SAMPLE_RATE)})
 
-note_seq.notebook_utils.colab_play(audio, sample_rate=SAMPLE_RATE)
+# note_seq.notebook_utils.colab_play(audio, sample_rate=SAMPLE_RATE)
 
-#@title Transcribe Audio
-#@markdown This may take a few minutes depending on the length of the audio file
-#@markdown you uploaded.
+# #@title Transcribe Audio
+# #@markdown This may take a few minutes depending on the length of the audio file
+# #@markdown you uploaded.
 
-load_gtag()
+# load_gtag()
 
-log_event('transcribeStart', {
-    'event_category': MODEL,
-    'value': round(len(audio) / SAMPLE_RATE)
-})
+# log_event('transcribeStart', {
+#     'event_category': MODEL,
+#     'value': round(len(audio) / SAMPLE_RATE)
+# })
 
-est_ns = inference_model(audio)
+# est_ns = inference_model(audio)
 
-log_event('transcribeComplete', {
-    'event_category': MODEL,
-    'value': round(len(audio) / SAMPLE_RATE),
-    'numNotes': sum(1 for note in est_ns.notes if not note.is_drum),
-    'numDrumNotes': sum(1 for note in est_ns.notes if note.is_drum),
-    'numPrograms': len(set(note.program for note in est_ns.notes
-                           if not note.is_drum))
-})
+# log_event('transcribeComplete', {
+#     'event_category': MODEL,
+#     'value': round(len(audio) / SAMPLE_RATE),
+#     'numNotes': sum(1 for note in est_ns.notes if not note.is_drum),
+#     'numDrumNotes': sum(1 for note in est_ns.notes if note.is_drum),
+#     'numPrograms': len(set(note.program for note in est_ns.notes
+#                            if not note.is_drum))
+# })
 
-note_seq.play_sequence(est_ns, synth=note_seq.fluidsynth,
-                       sample_rate=SAMPLE_RATE, sf2_path=SF2_PATH)
-note_seq.plot_sequence(est_ns)
+# note_seq.play_sequence(est_ns, synth=note_seq.fluidsynth,
+#                        sample_rate=SAMPLE_RATE, sf2_path=SF2_PATH)
+# note_seq.plot_sequence(est_ns)
 
-#@title Download MIDI Transcription
+# #@title Download MIDI Transcription
 
-load_gtag()
-log_event('downloadTranscription', {
-    'event_category': MODEL,
-    'value': round(len(audio) / SAMPLE_RATE),
-    'numNotes': sum(1 for note in est_ns.notes if not note.is_drum),
-    'numDrumNotes': sum(1 for note in est_ns.notes if note.is_drum),
-    'numPrograms': len(set(note.program for note in est_ns.notes
-                           if not note.is_drum))
-})
+# load_gtag()
+# log_event('downloadTranscription', {
+#     'event_category': MODEL,
+#     'value': round(len(audio) / SAMPLE_RATE),
+#     'numNotes': sum(1 for note in est_ns.notes if not note.is_drum),
+#     'numDrumNotes': sum(1 for note in est_ns.notes if note.is_drum),
+#     'numPrograms': len(set(note.program for note in est_ns.notes
+#                            if not note.is_drum))
+# })
 
-note_seq.sequence_proto_to_midi_file(est_ns, '/tmp/transcribed.mid')
-files.download('/tmp/transcribed.mid')
+# note_seq.sequence_proto_to_midi_file(est_ns, '/tmp/transcribed.mid')
+# files.download('/tmp/transcribed.mid')

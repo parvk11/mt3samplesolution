@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
+  - python=3.10
   - pip
   - jax
   - jaxlib=0.4.11  # Specify the version compatible with CUDA 12 (if applicable)
@@ -19,14 +19,14 @@ dependencies:
   - google-colab
   - numpy
   - ipython
-  - google-api-python-client  # For Google Cloud Storage utilities like gsutil
-  - google-cloud-sdk  # This includes gsutil
+  - google-api-python-client  
+  - google-cloud-sdk  
   - pip:
     - google-auth
     - google-cloud-storage
     - tfds-nightly
     - absl-py
-    - matplotlib  # For visualization (optional)
+    
   - system:
     - libfluidsynth3
     - build-essential
